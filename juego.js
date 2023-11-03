@@ -1,3 +1,5 @@
+let victoria=0; derrota=0; partidas=0
+
 function menu(){
     let x;
     console.log("1- Jugar   2- Estadisticas   3- Salir")
@@ -19,26 +21,58 @@ function menu(){
 }
 
 function jugar(){
-    let permitido = ""
-    let palabraOculta = "", letra
+    let intentos = 6
+    let palabraOculta = [], letra, palabraArray = [], letrasFalladas = []
     let palabra = prompt("Escribe una palabra")
+    palabra = palabra.toLocaleLowerCase()
     for (x = 0; x < palabra.length; x++){
-        palabraOculta += ("_ ")
+        palabraOculta.push("_")
+        palabraArray.push(palabra.charAt(x))
     }
+    
     console.log(palabraOculta)
-
+    let igual = false
     do{
-        letra = prompt("Introduce una letra")
+        do{
+            letra = prompt("Introduce una letra")
+            letra = letra.toLocaleLowerCase()
+    
+        }while (letra.length !== 1 || !letra.match(/[a-z]/))
 
-    }while (letra.length !== 1 || !letra.match(/[a-z]/))
-    
-    
+        if (palabra.includes(letra)){
+            for (x=0; x < palabra.length; x++){
+                if (letra == palabra.charAt(x)){
+                    palabraOculta[x] = letra
+                    console.log(palabraOculta)
+                    if(palabraOculta.toString() === palabraArray.toString()){
+                        victoria++
+                        console.log("Felicidades!! Has ganado")
+                        intentos = 0
+                    }
+                }
+            }
+        }
+        else{
+            intentos--
+            letrasFalladas.push(letra)
+            console.log(letrasFalladas)
+            console.log("Tienes " + intentos + " intentos restantes")
+            if (intentos == 0){
+                derrota++
+                console.log("Has perdido")
+            }
+        }
+    } while (intentos > 0)
+    partidas++
+    menu()
 }
 
-function estadisticas(ganadas,jugadas){
-    console.log("Has jugado un total de " + jugadas + " partidas")
-    console.log("Has jugado un total de " + jugadas/(ganadas*100) + " partidas")
-    console.log("Has ganado un total de " + jugadas/(ganadas*100) + " partidas")
+
+function estadisticas(){
+    console.log("Has jugado un total de " + partidas + " partidas")
+    console.log("Has ganado un total de " + ((victoria*100)/partidas).toFixed(2) + "% de las partidas (" + victoria + ")")
+    console.log("Has perdido un total de " + (100-(victoria*100)/partidas).toFixed(2) + "% de las partidas (" + derrota + ")")
+    menu()
 }
 
 function salir(){
