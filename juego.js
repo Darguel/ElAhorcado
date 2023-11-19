@@ -29,7 +29,7 @@ function jugar(){
         palabraOculta.push("_")
         palabraArray.push(palabra.charAt(x))
     }
-    
+    console.log(palabraArray)
     console.log(palabraOculta)
     let igual = false
     do{
@@ -77,4 +77,20 @@ function estadisticas(){
 
 function salir(){
     console.log("Has salido del juego")
+}
+
+function botonLetras(){
+    let botonesLetras = ""
+    let x = document.getElementById(abecedari)
+    for(x=0; x<= 26; x++){
+        document.getElementById("abecedari").innerHTML=abecedari;
+    }
+}
+
+function novaPartida(){
+
+}
+
+function vidasRestantes(){
+    
 }
